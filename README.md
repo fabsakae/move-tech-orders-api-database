@@ -1,57 +1,56 @@
-# move-tech-orders-api-database
+#  Move Tech Orders API - Cloud-Native & DevOps Architecture
 
-Ponto de partida do **Lab H2 — Provisionar e conectar o banco**.
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.11-blue?style=for-the-badge&logo=python" alt="Python">
+  <img src="https://img.shields.io/badge/FastAPI-0.110+-green?style=for-the-badge&logo=fastapi" alt="FastAPI">
+  <img src="https://img.shields.io/badge/PostgreSQL-16-orange?style=for-the-badge&logo=postgresql" alt="PostgreSQL">
+  <img src="https://img.shields.io/badge/Kubernetes-K3s-blueviolet?style=for-the-badge&logo=kubernetes" alt="Kubernetes">
+  <img src="https://img.shields.io/badge/Magalu%20Cloud-DBaaS%20%26%20VM-orange?style=for-the-badge" alt="Magalu Cloud">
+  <img src="https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-yellow?style=for-the-badge&logo=githubactions" alt="GitHub Actions">
+</p>
 
-Parte do curso **Move Tech** — Magalu × Prósper Digital Skills
-Formação em Cloud Computing para iniciantes
+##  Sobre o Projeto
 
----
-
-## Contexto
-
-A modelagem de dados já está documentada em `docs/data-model.md` e o código já usa SQLAlchemy.
-
-Seu trabalho neste lab é **provisionar o PostgreSQL na Magalu Cloud e conectar a aplicação**.
-
----
-
-## O que você vai fazer
-
-- [ ] Criar uma instância PostgreSQL no DBaaS da Magalu Cloud
-- [ ] Criar o banco `orders` manualmente no console
-- [ ] Configurar o GitHub Secret `DATABASE_URL`
-- [ ] Atualizar `k8s/app.yaml` com a variável de ambiente `DATABASE_URL`
-- [ ] Atualizar `.github/workflows/deploy.yml` com o step de criação do Kubernetes Secret
-- [ ] Disparar o deploy e validar `/health` com `"database": "ok"`
+Este projeto consiste em uma API de gerenciamento de pedidos (*Orders API*) desenvolvida em **FastAPI** e integrada a um banco de dados relacional **PostgreSQL**. A arquitetura foi concebida seguindo os princípios de microsserviços, containerização e práticas modernas de **DevOps e Cloud Computing**, sendo totalmente implantada e orquestrada em um cluster **Kubernetes (K3s)** hospedado na **Magalu Cloud**.
 
 ---
 
-## Como rodar localmente
+##  Arquitetura e Componentes de Infraestrutura
 
-**Pré-requisito:** Docker Desktop instalado.
+A solução utiliza um ecossistema robusto de infraestrutura em nuvem:
 
-```bash
-docker compose up --build
-```
-
-Acesse: http://localhost:8000/docs
-
----
-
-## Secrets necessários no GitHub
-
-Configure em Settings → Secrets and variables → Actions:
-
-| Secret | Descrição |
-|---|---|
-| `MGC_REGISTRY_USER` | Usuário do Container Registry da MGC |
-| `MGC_REGISTRY_PASSWORD` | Senha do Container Registry da MGC |
-| `MGC_REGISTRY_NAME` | Nome do registry na MGC |
-| `MGC_KUBECONFIG` | Conteúdo do kubeconfig.yaml |
-| `DATABASE_URL` | String de conexão do PostgreSQL |
+* **Computação e Orquestração:** Máquina Virtual rodando **Ubuntu** com cluster **K3s (Kubernetes)** para gerenciamento de pods em Alta Disponibilidade (High Availability).
+* **Banco de Dados (DBaaS):** Instância gerenciada de **PostgreSQL 16** na Magalu Cloud, garantindo persistência desacoplada e segura através de camadas de rede e segredos criptografados.
+* **Container Registry:** Hospedagem e versionamento de imagens de contêiner no **Magalu Cloud Container Registry**.
+* **Segurança e Gestão de Segredos:** Configuração de `Kubernetes Secrets` isolados e credenciais gerenciadas por variáveis de ambiente injetadas dinamicamente.
 
 ---
 
-## Próximo lab
+##  Pipeline de CI/CD (GitHub Actions)
 
-Após concluir este lab, avance para o **Lab H3 — Validar a persistência**.
+O projeto conta com uma esteira de integração e entrega contínua totalmente automatizada que executa as seguintes etapas a cada alteração no repositório:
+
+1. **Testes e Build:** Validação do código da aplicação.
+2. **Autenticação no Registry:** Login automatizado no Container Registry da Magalu Cloud.
+3. **Empacotamento:** Construção (*Build*) e envio (*Push*) da imagem Docker otimizada.
+4. **Deploy Automatizado:** Configuração do contexto do cluster (`kubectl`), injeção segura de segredos de banco de dados e atualização (*Rollout*) controlada dos pods no Kubernetes.
+
+---
+
+##  Tecnologias Utilizadas
+
+* **Linguagem:** Python 3.11, SQLAlchemy, Pydantic, Uvicorn
+* **Banco de Dados:** PostgreSQL 16 (Magalu Cloud DBaaS)
+* **Infraestrutura & Cloud:** Magalu Cloud (VMs, Container Registry, PostgreSQL DBaaS)
+* **Orquestração:** Kubernetes (K3s), kubectl
+* **Automação:** GitHub Actions (CI/CD)
+* **Containerização:** Docker
+
+---
+
+## 💻 Como Executar Localmente / Testar
+
+1. **Clone o repositório:**
+   ```bash
+   git clone [https://github.com/fabsakae/move-tech-orders-api-database.git](https://github.com/fabsakae/move-tech-orders-api-database.git)
+   cd move-tech-orders-api-database

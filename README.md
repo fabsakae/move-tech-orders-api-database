@@ -48,9 +48,3 @@ O projeto conta com uma esteira de integração e entrega contínua totalmente a
 
 ---
 
-## 💻 Como Executar Localmente / Testar
-
-1. **Clone o repositório:**
-   ```bash
-   git clone [https://github.com/fabsakae/move-tech-orders-api-database.git](https://github.com/fabsakae/move-tech-orders-api-database.git)
-   cd move-tech-orders-api-database
